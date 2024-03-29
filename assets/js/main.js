@@ -6,8 +6,8 @@ form.addEventListener('submit', function (e) {
   const inputPeso = e.target.querySelector('#peso');
   const inputAltura = e.target.querySelector('#altura');
 
-  const peso = Number(inputPeso.value);
-  const altura = Number(inputAltura.value);
+  const peso = formatHeight(inputPeso.value);
+  const altura = formatHeight(inputAltura.value);
 
   if (!peso) {
     setResultado('Peso inválido', false);
@@ -27,9 +27,20 @@ form.addEventListener('submit', function (e) {
   setResultado(msg, true);
 });
 
-function getNivelImc (imc) {
-  const nivel = ['Abaixo do peso', 'Peso normal', 'Sobrepeso',
-    'Obesidade grau 1', 'Obesidade grau 2', 'Obesidade grau 3'];
+function formatHeight(numero)  {
+  const numeroFormatado  = numero.replace(',', '.');
+  return Number(numeroFormatado);
+}
+
+function getNivelImc(imc) {
+  const nivel = [
+    'Abaixo do peso',
+    'Peso normal',
+    'Sobrepeso',
+    'Obesidade grau 1',
+    'Obesidade grau 2',
+    'Obesidade grau 3'
+  ];
 
   if (imc >= 39.9) return nivel[5];
   if (imc >= 34.9) return nivel[4];
@@ -39,17 +50,17 @@ function getNivelImc (imc) {
   if (imc < 18.5) return nivel[0];
 }
 
-function getImc (peso, altura) {
+function getImc(peso, altura) {
   const imc = peso / altura ** 2;
   return imc.toFixed(2);
 }
 
-function criaP () {
+function criaP() {
   const p = document.createElement('p');
   return p;
 }
 
-function setResultado (msg, isValid) {
+function setResultado(msg, isValid) {
   const resultado = document.querySelector('#resultado');
   resultado.innerHTML = '';
 
